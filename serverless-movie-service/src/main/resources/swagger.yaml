@@ -1,0 +1,172 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: Local Dev
+    url: https://localhost:8080
+
+info:
+  description: Simple CRUD API for Demo purpose
+  version: "1.0.0"
+  title: Serverless CRUD API
+  contact:
+    email: dmetzler@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /movie/:
+    get:
+      summary: "Get the list of movies"
+      operationId: searchMovie
+      description: |
+        By passing in the appropriate options, you can search for
+        available movies in the system
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up movies
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '400':
+          description: bad input parameter
+    post:
+      summary: adds a movie item
+      operationId: addMovie
+      description: Adds an item to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+        description: Movie item to add
+  /movie/{id}:
+    get:
+      summary: "Get a movie by its id"
+      operationId: getMovieById
+      description: |
+        By passing the id, gets the corresponding movie
+      parameters:
+       - in: path
+         name: id
+         description: The id of the movie
+         required: true
+         schema:
+           type: string
+      responses:
+        '200':
+          description: a movie object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: The movie doesn't exist
+        '500':
+          description: something bad happened
+    put:
+      summary: "Update a movie by its id"
+      operationId: updateMovieById
+      description: |
+        By passing the id, updates the corresponding movie
+      parameters:
+       - in: path
+         name: id
+         description: The id of the movie
+         required: true
+         schema:
+           type: string
+      responses:
+        '200':
+          description: a movie object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: The movie doesn't exist
+        '500':
+          description: something bad happened
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+        description: Movie item to add
+    delete:
+      summary: "Delete a movie by its id"
+      operationId: deleteMovieById
+      description: |
+        By passing the id, delete the corresponding movie
+      parameters:
+       - in: path
+         name: id
+         description: The id of the movie
+         required: true
+         schema:
+           type: string
+      responses:
+        '200':
+          description: a movie object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: The movie doesn't exist
+        '500':
+          description: something bad happened
+
+components:
+  schemas:
+    Movie:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title:
+          type: string
+          example: The Big Lebowski
+        releaseDate:
+          type: string
+          format: date
+          example: '1998-03-06'
+        director:
+          $ref: '#/components/schemas/Person'
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
+    Person:
+      required:
+        - firstname
+        - lastname
+      properties:
+        firstname:
+          type: string
+          example: Ethan
+        lastname:
+          type: string
+          example: Cohen
+      type: object
