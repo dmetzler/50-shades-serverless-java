@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Movie API
+
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+
+Parameters:
+  corsDomain:
+    Type: String
+    Default: www.example.com
+
+Resources:
+
+  MovieServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: org.dmetzler.serverless.movie.AwsServiceMovieHandler::handleRequest
+      Runtime: java8
+      CodeUri: target/serverless-movie-service-aws-0.0.1-SNAPSHOT-lambda-package.zip
+      Layers:
+        - !Ref MovieServiceFunctionLayer
+      MemorySize: 1024
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+             TableName: !Sub "${AWS::StackName}-movies"
+      Timeout: 30
+      Environment:
+        Variables:
+          MOVIES_TABLE_NAME: !Sub "${AWS::StackName}-movies"
+
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Type: AllAtOnce
+
+  MovieServiceFunctionLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: movie-service-java-libs
+      Description: Java deps for movie service
+      ContentUri: target/java
+      CompatibleRuntimes:
+        - java8
+      LicenseInfo: 'Apache'
+
+  MovieApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+
+      # Allows www.example.com to call these APIs
+      # SAM will automatically add AllowMethods with a list of methods for this API
+      # Cors: "${corsDomain}"
+      DefinitionBody:
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          # Replace <bucket> with your bucket name
+          Parameters:
+            Location: ./target/swagger.yaml
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: MovieServiceFunction
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Sub ${MovieServiceFunction.Arn}
+      Principal: apigateway.amazonaws.com
+
+
+
+  MoviesTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: Id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      TableName: !Sub "${AWS::StackName}-movies"
+
+Outputs:
+  MovieAPIGatewayEndpoint:
+    Description: URL of the API Gateway PROD stage
+    Value: !Sub 'https://${MovieApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'

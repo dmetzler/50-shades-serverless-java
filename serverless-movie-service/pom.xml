@@ -9,7 +9,6 @@
   </parent>
 
   <artifactId>serverless-movie-service</artifactId>
-  <packaging>war</packaging>
 
   <name>Java Serverless :: Movie Service Core</name>
 

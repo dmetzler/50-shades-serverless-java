@@ -1,5 +1,6 @@
 package org.dmetzler.serverless.jaxrs.impl;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
@@ -11,6 +12,7 @@ import org.dmetzler.serverless.service.MovieNotFoundException;
 
 public class MovieApiServiceImpl extends MovieApiService {
 
+    @Inject
     protected MovieDao dao;
 
     @Override

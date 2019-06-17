@@ -28,7 +28,6 @@ paths:
           required: false
           schema:
             type: string
-
       responses:
         '200':
           description: search results matching criteria
@@ -40,6 +39,13 @@ paths:
                   $ref: '#/components/schemas/Movie'
         '400':
           description: bad input parameter
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MovieServiceFunction.Arn}/invocations"
+        httpMethod: POST
+        type: aws_proxy
+        passthroughBehavior: when_no_match
+
     post:
       summary: adds a movie item
       operationId: addMovie
@@ -47,6 +53,12 @@ paths:
       responses:
         '201':
           description: item created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
         '400':
           description: 'invalid input, object invalid'
         '409':
@@ -57,6 +69,13 @@ paths:
             schema:
               $ref: '#/components/schemas/Movie'
         description: Movie item to add
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MovieServiceFunction.Arn}/invocations"
+        httpMethod: POST
+        type: aws_proxy
+        passthroughBehavior: when_no_match
+
   /movie/{id}:
     get:
       summary: "Get a movie by its id"
@@ -81,6 +100,13 @@ paths:
           description: The movie doesn't exist
         '500':
           description: something bad happened
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MovieServiceFunction.Arn}/invocations"
+        httpMethod: POST
+        type: aws_proxy
+        passthroughBehavior: when_no_match
+
     put:
       summary: "Update a movie by its id"
       operationId: updateMovieById
@@ -110,6 +136,13 @@ paths:
             schema:
               $ref: '#/components/schemas/Movie'
         description: Movie item to add
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MovieServiceFunction.Arn}/invocations"
+        httpMethod: POST
+        type: aws_proxy
+        passthroughBehavior: when_no_match
+
     delete:
       summary: "Delete a movie by its id"
       operationId: deleteMovieById
@@ -133,6 +166,12 @@ paths:
           description: The movie doesn't exist
         '500':
           description: something bad happened
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MovieServiceFunction.Arn}/invocations"
+        httpMethod: POST
+        type: aws_proxy
+        passthroughBehavior: when_no_match
 
 components:
   schemas:

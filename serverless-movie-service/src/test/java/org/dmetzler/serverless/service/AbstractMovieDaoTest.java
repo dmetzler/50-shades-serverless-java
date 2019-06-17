@@ -73,10 +73,7 @@ public abstract class AbstractMovieDaoTest {
     public void can_delete_movie() throws Exception {
         loadFixturesMovie();
 
-        List<Movie> result = dao.searchMovie("Lebovski");
-        assertThat(result).hasSize(1);
-
-        Movie movie = result.get(0);
+        Movie movie = dao.getMovieById("b8a5e6f1-b5ac-40cb-8a95-ef3941d4e930");
 
         dao.deleteMovieById(movie.getId().toString());
 
@@ -91,6 +88,12 @@ public abstract class AbstractMovieDaoTest {
     }
 
     protected void loadFixturesMovie() throws IOException, JsonParseException, JsonMappingException {
+        List<Movie> movies = getTestMovies();
+
+        movies.forEach(m -> dao.saveMovie(m));
+    }
+
+    public static List<Movie> getTestMovies() throws IOException, JsonParseException, JsonMappingException {
         InputStream in = AbstractMovieDaoTest.class.getClassLoader().getResourceAsStream("test-fixtures.json");
 
         ObjectMapper mapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
@@ -99,7 +102,6 @@ public abstract class AbstractMovieDaoTest {
                                                 .setDateFormat(new RFC3339DateFormat());
         List<Movie> movies = mapper.readValue(in, new TypeReference<List<Movie>>() {
         });
-
-        movies.forEach(m -> dao.saveMovie(m));
+        return movies;
     }
 }

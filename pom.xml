@@ -27,7 +27,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jersey.version>2.27</jersey.version>
     <jackson.version>2.9.8</jackson.version>
-    <aws.sdk.version>[1.11,2.0)</aws.sdk.version>
+    <aws.sdk.version>[1.11.571,2.0)</aws.sdk.version>
     <!-- Sonar -->
     <!-- The destination file for the code coqverage report has to be set to
       the same value in the parent pom and in each module pom. Then JaCoCo will
@@ -210,11 +210,6 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.nuxeo.cloud.conversion</groupId>
-        <artifactId>cloud-conversion-plugin</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>3.1.0</version>
@@ -223,11 +218,6 @@
         <groupId>org.glassfish.jersey.containers</groupId>
         <artifactId>jersey-container-servlet-core</artifactId>
         <version>${jersey.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>servlet-api</artifactId>
-        <version>${servlet-api-version}</version>
       </dependency>
 
     </dependencies>
@@ -241,6 +231,7 @@
       </activation>
       <modules>
         <module>serverless-movie-service</module>
+        <module>serverless-movie-service-aws</module>
       </modules>
     </profile>
 
