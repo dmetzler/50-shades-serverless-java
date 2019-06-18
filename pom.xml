@@ -5,10 +5,10 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dmetzler.serverless</groupId>
-  <artifactId>java-serverless-parent</artifactId>
+  <artifactId>serverless-movie-service-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Java Serverless :: parent</name>
+  <name>Serverless Movie Service :: parent</name>
 
   <description>
     How to do serverless in Java
@@ -55,6 +55,13 @@
       <dependency>
         <groupId>org.dmetzler.serverless</groupId>
         <artifactId>serverless-movie-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dmetzler.serverless</groupId>
+        <artifactId>serverless-movie-service</artifactId>
+        <type>test-jar</type>
+        <scope>test</scope>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -160,6 +167,11 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-servlet</artifactId>
+        <version>${jersey.version}</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.12</version>
@@ -231,7 +243,9 @@
       </activation>
       <modules>
         <module>serverless-movie-service</module>
+        <module>serverless-movie-service-webapp</module>
         <module>serverless-movie-service-aws</module>
+        <module>serverless-movie-service-appengine</module>
       </modules>
     </profile>
 

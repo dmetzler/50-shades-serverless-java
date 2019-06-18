@@ -4,18 +4,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.dmetzler.serverless</groupId>
-    <artifactId>java-serverless-parent</artifactId>
+    <artifactId>serverless-movie-service-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>serverless-movie-service</artifactId>
 
-  <name>Java Serverless :: Movie Service Core</name>
+  <name>Serverless Movie Service :: JAX-RS Core</name>
 
 
   <properties>
     <swagger-core-version>2.0.0</swagger-core-version>
-    <jetty-version>9.2.9.v20150224</jetty-version>
     <servlet-api-version>2.5</servlet-api-version>
   </properties>
 
@@ -85,33 +84,11 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>${jetty-version}</version>
-        <configuration>
-          <webApp>
-            <contextPath>/</contextPath>
-          </webApp>
-          <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
-          <stopPort>8079</stopPort>
-          <stopKey>stopit</stopKey>
-          <stopWait>10</stopWait>
-          <httpConnector>
-            <port>8080</port>
-            <idleTimeout>60000</idleTimeout>
-          </httpConnector>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-servlet-core</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
