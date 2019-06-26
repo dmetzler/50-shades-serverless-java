@@ -5,9 +5,9 @@ servers:
     url: https://localhost:8080
 
 info:
-  description: Simple CRUD API for Demo purpose
+  description: Movie CRUD API
   version: "1.0.0"
-  title: Serverless CRUD API
+  title: Movie CRUD API
   contact:
     email: dmetzler@gmail.com
   license:

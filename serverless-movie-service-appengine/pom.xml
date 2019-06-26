@@ -5,7 +5,6 @@
 
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
 
   <parent>
     <groupId>org.dmetzler.serverless</groupId>
@@ -71,6 +70,13 @@
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+    </dependency>
+
+
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
@@ -107,6 +113,11 @@
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
         <version>${appengine.maven.plugin.version}</version>
+        <configuration>
+          <enableJarClasses>true</enableJarClasses>
+          <port>8080</port>
+          <address>0.0.0.0</address>
+        </configuration>
       </plugin>
     </plugins>
   </build>

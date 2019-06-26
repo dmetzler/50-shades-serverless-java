@@ -1,17 +1,19 @@
-package org.dmetzler.serverless.service;
+package org.dmetzler.serverless.jaxrs.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dmetzler.serverless.model.Movie;
+import org.dmetzler.serverless.service.MovieDao;
+import org.dmetzler.serverless.service.MovieNotFoundException;
 
-public class MemoryMovieDaoImpl implements MovieDao {
+public class MemoryMovieDao implements MovieDao {
 
-    Map<String, Movie> movies = new HashMap<>();
+    Map<String, Movie> movies = new ConcurrentHashMap<>();
 
     @Override
     public List<Movie> searchMovie(String search) {

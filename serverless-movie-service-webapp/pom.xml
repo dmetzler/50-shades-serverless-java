@@ -16,28 +16,17 @@
 
 
   <properties>
-    <jetty-version>9.2.9.v20150224</jetty-version>
+    <jetty-version>9.4.19.v20190610</jetty-version>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
   <build>
+    <finalName>movieApi</finalName>
     <plugins>
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty-version}</version>
-        <configuration>
-          <webApp>
-            <contextPath>/</contextPath>
-          </webApp>
-          <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
-          <stopPort>8079</stopPort>
-          <stopKey>stopit</stopKey>
-          <stopWait>10</stopWait>
-          <httpConnector>
-            <port>8080</port>
-            <idleTimeout>60000</idleTimeout>
-          </httpConnector>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -48,15 +37,16 @@
       <artifactId>serverless-movie-service</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.dmetzler.serverless</groupId>
-      <artifactId>serverless-movie-service</artifactId>
-      <type>test-jar</type>
-      <scope>test</scope>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet-core</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+    </dependency>
   </dependencies>
 </project>

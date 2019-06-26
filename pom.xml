@@ -22,10 +22,11 @@
     <url>http://nuxeo.github.io</url>
   </scm>
 
+
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jersey.version>2.27</jersey.version>
+    <jersey.version>2.28</jersey.version>
     <jackson.version>2.9.9</jackson.version>
     <aws.sdk.version>[1.11.571,2.0)</aws.sdk.version>
     <!-- Sonar -->
@@ -62,6 +63,12 @@
         <artifactId>serverless-movie-service</artifactId>
         <type>test-jar</type>
         <scope>test</scope>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dmetzler.serverless</groupId>
+        <artifactId>serverless-movie-service-webapp</artifactId>
+        <type>war</type>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -227,6 +234,11 @@
         <version>3.1.0</version>
       </dependency>
       <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+        <version>2.1</version>
+      </dependency>
+      <dependency>
         <groupId>org.glassfish.jersey.containers</groupId>
         <artifactId>jersey-container-servlet-core</artifactId>
         <version>${jersey.version}</version>
@@ -234,6 +246,25 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>display-dependency-updates</goal>
+              <goal>display-plugin-updates</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>
