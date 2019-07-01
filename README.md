@@ -6,7 +6,7 @@ This repo demonstrate how to port a simple JAX-RS application to serverless usin
 
  - [x] Jetty + InMemory storage
  - [x] AWS Lambda + DynamoDB + SAM
- - [ ] Google AppEngine + Google Datastore
+ - [x] Google AppEngine + Google Datastore
  - [ ] Google KNative + MongoDB
  - [ ] Microsoft Azure Functions + Azure Tables
 

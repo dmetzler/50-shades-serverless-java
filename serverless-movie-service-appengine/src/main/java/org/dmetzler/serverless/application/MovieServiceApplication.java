@@ -4,9 +4,9 @@ import javax.inject.Singleton;
 import javax.ws.rs.ApplicationPath;
 
 import org.dmetzler.serverless.jaxrs.MovieApiService;
-import org.dmetzler.serverless.jaxrs.impl.MemoryMovieDao;
 import org.dmetzler.serverless.jaxrs.impl.MovieApiServiceImpl;
 import org.dmetzler.serverless.service.MovieDao;
+import org.dmetzler.serverless.service.impl.DataStoreMovieDao;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -18,7 +18,7 @@ public class MovieServiceApplication extends ResourceConfig {
         @Override
         protected void configure() {
             bind(MovieApiServiceImpl.class).to(MovieApiService.class);
-            bind(MemoryMovieDao.class).to(MovieDao.class).in(Singleton.class);
+            bind(DataStoreMovieDao.class).to(MovieDao.class).in(Singleton.class);
         }
     }
 
